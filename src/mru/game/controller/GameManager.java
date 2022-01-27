@@ -17,13 +17,12 @@ public class GameManager {
 	 * A method to find the top players
 	 * Depending on your designing technique you may need and you can add more methods here 
 	 */
-
-	ArrayList<Player>players;//remember arraylist is a list of objects
-	public final String FILE_NAME = "res/CasinoInfo.txt";
 	
-	public String loadData() {
+	static ArrayList<Player>players;//remember arraylist is a list of objects
+	private final static String FILE_NAME = "res/CasinoInfo.txt";
+	
+	public static String loadData() {
 		File info = new File(FILE_NAME);
-		String[] splitLine = new String [3];
 		String currentLine;
 		
 		//read in current line, parse with commas, create player based off of index 1,2,3 in splitLine
@@ -33,12 +32,9 @@ public class GameManager {
 				Scanner reader = new Scanner(info);
 				while (reader.hasNextLine()) {
 					currentLine = reader.nextLine();
-					for(int i; i<3; i++) {
-						
-						splitLine[i] = Integer.par;
-					}
-					
-					
+					String[] splitLine = currentLine.split(",");
+					System.out.print(splitLine.toString());
+					players.add(new Player(splitLine[0],Double.parseDouble(splitLine[1]),Integer.parseInt(splitLine[2])));
 				}
 				reader.close();
 			}catch (Exception e){
@@ -49,8 +45,8 @@ public class GameManager {
 		
 		
 		
-		
-		return data;
+		System.out.print(players.get(0).toString());
+		return players.toString();
 	}
 
 }
