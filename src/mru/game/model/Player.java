@@ -12,9 +12,16 @@ public class Player {
 	private int wins;
 	
 	public Player(String name, double balance, int wins) {
+		this.name = name;
+		this.balance = balance;
+		this.wins = wins;
+	}
+	
+	public Player (String name) {
 		this.setName(name);
-		this.setBalance(balance);
-		this.setWins(wins);
+		balance = 100;
+		wins = 0;
+		
 	}
 
 	public String getName() {
