@@ -15,8 +15,6 @@ public class AppMenu {
 	
 	// should have method show main menu and return int with option
 	//method with show sub menus
-	private String option1;
-	private String option2;
 	
 	public  int showMenu() {
 		final String PLAY = "(P) Play";
@@ -25,30 +23,25 @@ public class AppMenu {
 		final String SELECT = "Select one of these options:";
 		final String CHOICE = "Enter a choice: ";
 		
-//		do {
-			option1 = "";
-			option2 = "";
-			System.out.println(SELECT);
-			System.out.printf("%16s\n" + "%18s\n" +  "%16s\n", PLAY, SEARCH, EXIT);
-			
-			Scanner input = new Scanner(System.in);
-			System.out.print(CHOICE);
-			option1 = input.next();
-			
-			if(!option1.equalsIgnoreCase("p") && !option1.equalsIgnoreCase("e") && !option1.equalsIgnoreCase("s")) {
-				System.out.print("Sorry, invalid input. Try again.\n\n");  // display error
-				return 3;									//return 3 to go back to menu
-			}else if(option1.equalsIgnoreCase("p")) {
-				return 1;									//return 1 to play
-			}else if(option1.equalsIgnoreCase("s")){		
-				return 2;									//return 2 to search
-			}else {
-				return 0;									//return 0 to exit
-			}
-//		}while(!option1.equalsIgnoreCase("e"));
+		String option = "";
 		
-		 // do all of this while option doesnt equal 3 and then return for exit in main app??		
-				
+		System.out.println(SELECT);
+		System.out.printf("%16s\n" + "%18s\n" +  "%16s\n", PLAY, SEARCH, EXIT);
+			
+		Scanner input = new Scanner(System.in);
+		System.out.print(CHOICE);
+		option = input.next();
+			
+		if(!option.equalsIgnoreCase("p") && !option.equalsIgnoreCase("e") && !option.equalsIgnoreCase("s")) {
+			System.out.print("Sorry, invalid input. Try again.\n\n");  // display error
+			return 3;									//return 3 to go back to menu
+		}else if(option.equalsIgnoreCase("p")) {
+			return 1;									//return 1 to play
+		}else if(option.equalsIgnoreCase("s")){		
+			return 2;									//return 2 to search
+		}else {
+			return 0;									//return 0 to exit
+		}			
 	}
 	
 	public int showMenu2() {
@@ -57,24 +50,27 @@ public class AppMenu {
 		final String BACK = "(B) Back to Main Menu"; //return 3
 		final String SELECT = "Select one of these options:";
 		final String CHOICE = "Enter a choice: ";
+		String option = "";
 		
 		do {
+			
+			
 			System.out.println(SELECT);
 			System.out.printf("%16s\n" + "%18s\n" +  "%16s\n", TOP, NAME, BACK);
 			
 			Scanner input = new Scanner(System.in);
 			System.out.print(CHOICE);
-			option2 = input.next();
+			option = input.next();
 			
-			if(!option2.equalsIgnoreCase("T") && !option2.equalsIgnoreCase("N") && !option2.equalsIgnoreCase("B")) {
+			if(!option.equalsIgnoreCase("T") && !option.equalsIgnoreCase("N") && !option.equalsIgnoreCase("B")) {
 				System.out.print("Sorry, invalid input. Try again.\n\n");
 			}
 			
-		}while(!option2.equalsIgnoreCase("T") && !option2.equalsIgnoreCase("N") && !option2.equalsIgnoreCase("B"));
+		}while(!option.equalsIgnoreCase("T") && !option.equalsIgnoreCase("N") && !option.equalsIgnoreCase("B"));
 			
-		if(option2.equalsIgnoreCase("T"))
+		if(option.equalsIgnoreCase("T"))
 			return 1;
-		else if(option2.equalsIgnoreCase("N")) {
+		else if(option.equalsIgnoreCase("N")) {
 			return 2;
 		}
 		return 3;

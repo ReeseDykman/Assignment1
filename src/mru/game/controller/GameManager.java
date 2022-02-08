@@ -155,7 +155,15 @@ public class GameManager {
 	public void runGame() {
 		Player p = getPlayer(mainMenu.enterName());
 		game = new PuntoBancoGame(p);
-		int result;
+		
+		do {
+			
+			game.setPlayerGuess(mainMenu.showGuess());
+			game.setPlayerBet(mainMenu.showBet());
+			mainMenu.showBoard(game.getPlayerBet(), game.play(), game.getPlayerHand(), game.getBankerHand());
+			
+		}while(mainMenu.askPlayAgain());
+		
 		//mainMenu.displayWelcome(p);
 		//mainMenu.displayNewWelcome(p)
 		//game.setPlayerOutcome(mainMenu.showOutcome()) showOutcome returns int;
