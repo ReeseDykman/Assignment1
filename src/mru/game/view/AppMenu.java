@@ -25,7 +25,7 @@ public class AppMenu {
 		final String SELECT = "Select one of these options:";
 		final String CHOICE = "Enter a choice: ";
 		
-		do {
+//		do {
 			option1 = "";
 			option2 = "";
 			System.out.println(SELECT);
@@ -36,32 +36,25 @@ public class AppMenu {
 			option1 = input.next();
 			
 			if(!option1.equalsIgnoreCase("p") && !option1.equalsIgnoreCase("e") && !option1.equalsIgnoreCase("s")) {
-				System.out.print("Sorry, invalid input. Try again.\n");
+				System.out.print("Sorry, invalid input. Try again.\n\n");  // display error
+				return 3;									//return 3 to go back to menu
 			}else if(option1.equalsIgnoreCase("p")) {
-				return 1;
-			}else if(option1.equalsIgnoreCase("s")){
-				int i = showMenu2();
-				if(i == 0) {
-					return 2;
-				}else if (i == 1) {
-					return 3;
-				}else {
-					continue;
-				}
+				return 1;									//return 1 to play
+			}else if(option1.equalsIgnoreCase("s")){		
+				return 2;									//return 2 to search
+			}else {
+				return 0;									//return 0 to exit
 			}
-		}while(!option1.equalsIgnoreCase("e"));
+//		}while(!option1.equalsIgnoreCase("e"));
 		
-		 // do all of this while option doesnt equal 3 and then return for exit in main app??
-		
-		return 0;
-		
+		 // do all of this while option doesnt equal 3 and then return for exit in main app??		
 				
 	}
 	
 	public int showMenu2() {
-		final String TOP = "(T) Top 2 Players"; //return 0
-		final String NAME = "(N) Search By Name"; // return 1
-		final String BACK = "(B) Back to Main Menu"; //return 2
+		final String TOP = "(T) Top 2 Players"; //return 4
+		final String NAME = "(N) Search By Name"; // return 5
+		final String BACK = "(B) Back to Main Menu"; //return 3
 		final String SELECT = "Select one of these options:";
 		final String CHOICE = "Enter a choice: ";
 		
@@ -74,18 +67,17 @@ public class AppMenu {
 			option2 = input.next();
 			
 			if(!option2.equalsIgnoreCase("T") && !option2.equalsIgnoreCase("N") && !option2.equalsIgnoreCase("B")) {
-				System.out.print("Sorry, invalid input. Try again.\n");//invalid input perhaps?
+				System.out.print("Sorry, invalid input. Try again.\n\n");
 			}
 			
 		}while(!option2.equalsIgnoreCase("T") && !option2.equalsIgnoreCase("N") && !option2.equalsIgnoreCase("B"));
 			
 		if(option2.equalsIgnoreCase("T"))
-			return 0;
-		else if(option2.equalsIgnoreCase("N")) {
 			return 1;
-		}else {
+		else if(option2.equalsIgnoreCase("N")) {
 			return 2;
 		}
+		return 3;
 	}
 	
 	public void showTopPlayers(ArrayList<Player> topPlayers){//should work off of top players list idk this hurts my head {
@@ -110,22 +102,33 @@ public class AppMenu {
 		System.out.println(secondRow);
 		
 		Scanner input = new Scanner(System.in);
-		System.out.print("Press Enter to continue...");
+		System.out.print("Press Enter to continue...\n");
 		input.nextLine();
-		showMenu();
 		
 	}
 	
-	public void searchPlayer(Player plyr) {
+	public void searchPlayer(ArrayList<Player> players) {
+		String name = enterName();
+		Player player = null;
+		Scanner input = new Scanner(System.in);
+		
+		for(int i =0; i<players.size(); i++) {
+			if(name.equalsIgnoreCase(players.get(i).getName())) {
+				player = players.get(i);
+				break;
+			}
+		}
+		
+		if(player == null) {
+			System.out.print("Sorry, player not found.\nPress enter to return to menu...\n\n");
+			input.nextLine();
+			return;
+		}
 		
 		final String row = String.format("+" + "=".repeat(18) + "+" + "=".repeat(15) + "+" + "=".repeat(18) + "+");
 		final String row2 = String.format("+" + "-".repeat(18) + "+" + "-".repeat(15) + "+" + "-".repeat(18) + "+");
 		final String title = String.format("%35s", "- PLAYER INFO -");
 		final String titleRow = String.format("%s" + "%20s" + "%18s" + "%12s", "|NAME","|#WINS","|BALANCE", "|" );
-		
-		
-		
-		Player player = plyr;
 		
 		final int colLength = 19;
 		final int midColLength = 15;
@@ -140,10 +143,9 @@ public class AppMenu {
 		System.out.printf("%s" + "%" + (SPACING) + "s" + "%" + SPACING2 + "s" + "%" + SPACING3 + "s","|" + player.getName(), "|" + player.getWins(), "|" + player.getBalance(), "|\n");
 		System.out.print(row2 + "\n");
 		
-		Scanner input = new Scanner(System.in);
-		System.out.print("Press Enter to continue...");
+		
+		System.out.print("Press Enter to continue...\n");
 		input.nextLine();
-		showMenu();
 	}
 	
 	public String enterName() {

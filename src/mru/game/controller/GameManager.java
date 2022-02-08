@@ -25,6 +25,7 @@ public class GameManager {
 	private File info;
 	private AppMenu mainMenu;
 	private PuntoBancoGame game;
+	private boolean newPlayer = false;
 	
 	/**
 	 * Constructor for GameManager
@@ -74,28 +75,46 @@ public class GameManager {
 		
 		mainMenu = new AppMenu();
 		
-		switch(mainMenu.showMenu()) {
+		int j = -1;
+		int i = -1;
+		
+		while(i != 1 && i != 2 && i != 3 ) {
+			i = mainMenu.showMenu();
+		}
+		
+		switch(i) {
 
 		case 1://game
 			runGame();
 			break;
-		case 2://top 2 players
-			mainMenu.showTopPlayers(getTopPlayers());
+		case 2:
+			j = mainMenu.showMenu2();
 			break;
-		case 3:// search player
-			mainMenu.searchPlayer(getPlayer(mainMenu.enterName()));
-			break;
-		default: //save and exit
-			
-			
+		default:
+			showMenus();		
 		}
 		
-	
+		switch (j) {
+		case 1:
+		mainMenu.showTopPlayers(getTopPlayers());
+		showMenus();
+		break;
+		
+		case 2:
+		mainMenu.searchPlayer(players);
+		showMenus();
+		break;
+		
+		default:
+			showMenus();
+		}
+		
 	}
 	
 	public Player getPlayer(String name) {
 		
 		Player search = null;
+		
 		
 		for(int i =0; i<players.size(); i++) {
 			if(name.equalsIgnoreCase(players.get(i).getName())) {
@@ -103,11 +122,14 @@ public class GameManager {
 				break;
 			}
 		}
-
-		if(search == null) {
-			System.out.print("Error: Player not found");
-		}
 		
+		if (search == null) {
+			System.out.print("New player successfully created...");
+			search = new Player(name);
+			newPlayer = true;
+			players.add(search);
+		}
+	
 		return search;
 	}
 	
@@ -131,7 +153,14 @@ public class GameManager {
 	}
 	
 	public void runGame() {
-		game = new PuntoBancoGame(getPlayer(mainMenu.enterName()), mainMenu);
+		Player p = getPlayer(mainMenu.enterName());
+		game = new PuntoBancoGame(p);
+		int result;
+		//mainMenu.displayWelcome(p);
+		//mainMenu.displayNewWelcome(p)
+		//game.setPlayerOutcome(mainMenu.showOutcome()) showOutcome returns int;
+		//game.setPlayerBet(mainMenu.showBet());  showBet returns double
+		//do game.play while it doesnt = 1
 	}
 	//save
 
