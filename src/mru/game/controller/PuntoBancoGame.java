@@ -146,7 +146,7 @@ public class PuntoBancoGame {
 		if((bankerPoints < playerPoints && playerGuess == 0) || (bankerPoints > playerPoints && playerGuess == 1)) {
 			betterWins();
 			return 0;
-		}else if (playerPoints == bankerPoints && playerGuess == 3){
+		}else if (playerPoints == bankerPoints && playerGuess == 2){
 			betterWinsOnTie();
 			return 0;
 		}else {

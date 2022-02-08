@@ -155,11 +155,12 @@ public class GameManager {
 	public void runGame() {
 		Player p = getPlayer(mainMenu.enterName());
 		game = new PuntoBancoGame(p);
+		mainMenu.showWelcome(p, newPlayer);
 		
 		do {
 			
 			game.setPlayerGuess(mainMenu.showGuess());
-			game.setPlayerBet(mainMenu.showBet());
+			game.setPlayerBet(mainMenu.showBet(p));
 			mainMenu.showBoard(game.getPlayerBet(), game.play(), game.getPlayerHand(), game.getBankerHand());
 			
 		}while(mainMenu.askPlayAgain());

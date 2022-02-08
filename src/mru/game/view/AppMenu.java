@@ -153,4 +153,96 @@ public class AppMenu {
 		
 		return name;
 	}
+	
+	public void showWelcome(Player p, Boolean newPlayer) {
+		
+		final String WELCOME = "Welcome back " + p.getName();
+		final String WELCOMENEW = "Welcome " + p.getName();
+		final int SPACING1 = WELCOME.length() + 3;
+		final int SPACING2 = 6;
+		final String BALANCE = "your balance is: " + p.getBalance() + "$";
+		final int SPACING3 = BALANCE.length() + 3;
+		final int TABLEWIDTH = WELCOME.length() + BALANCE.length() + 21;
+		final String STARS = "*";
+		final int SPACING4 = WELCOMENEW.length() + 3;
+		final int NEWTABLEWIDTH = TABLEWIDTH -5;
+		
+		if (newPlayer == false) {
+			System.out.printf(STARS.repeat(TABLEWIDTH) + "\n***%" + SPACING1 + "s" + "%" + SPACING2 + "s" + "%" + SPACING3 + "s" + "%" + SPACING2 + "s\n%s" , WELCOME, "---", BALANCE,"***", STARS.repeat(TABLEWIDTH));
+		}else {
+			System.out.printf(STARS.repeat(NEWTABLEWIDTH) + "\n***%" + SPACING4 + "s" + "%" + SPACING2 + "s" + "%" + SPACING3 + "s" + "%" + SPACING2 + "s\n%s" , WELCOMENEW, "---", BALANCE,"***", STARS.repeat(NEWTABLEWIDTH));
+		}
+	}
+	
+	public int showGuess() {
+		
+		final String PLAYER = "(P) Player Wins"; //return 4
+		final String BANKER = "(B) Banker Wins"; // return 5
+		final String TIE = "(T) Tie Game"; //return 3
+		final String SELECT = "Who do you want to bet on?";
+		final String CHOICE = "Enter a choice: ";
+		
+		String option = "";
+		
+		do {
+			
+			
+			System.out.println(SELECT);
+			System.out.printf("%25s\n" + "%25s\n" +  "%22s\n", PLAYER, BANKER, TIE);
+			
+			Scanner input = new Scanner(System.in);
+			System.out.print(CHOICE);
+			option = input.next();
+			System.out.print("\n");
+			
+			if(!option.equalsIgnoreCase("P") && !option.equalsIgnoreCase("B") && !option.equalsIgnoreCase("T")) {
+				System.out.print("Sorry, invalid input. Try again.\n\n");
+			}
+			
+		}while(!option.equalsIgnoreCase("P") && !option.equalsIgnoreCase("B") && !option.equalsIgnoreCase("T"));
+			
+		if(option.equalsIgnoreCase("P"))
+			return 0;
+		else if(option.equalsIgnoreCase("B")) {
+			return 1;
+		}else {
+			return 2;
+		}	
+	}
+	
+	public double showBet(Player p) {
+		double bet = -1;
+		
+		while(bet < p.getBalance()) {
+			Scanner input = new Scanner(System.in);
+			System.out.print("How much do you want to bet this round? ");
+			bet = input.nextDouble();
+		
+			if (bet < p.getBalance()) {
+				System.out.print("Insufficient funds, try again...\n");
+			}
+		}
+		return bet;
+	}
+	
+	public Boolean askPlayAgain() {
+		String choice;
+		do {
+			Scanner input = new Scanner(System.in);
+			System.out.print("Do you want to play again? (Y/N): ");
+			choice = input.next();
+			
+			if(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n")) {
+				System.out.print("Invalid choice, please try again\n\n");
+			}
+			
+		}while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"));
+		
+		if(choice.equalsIgnoreCase("y")) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 }
