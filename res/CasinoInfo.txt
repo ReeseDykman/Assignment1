@@ -1,8 +1,8 @@
-reese,0.0,0
-kale,130.0,0
+reese,0.0,3
+kale,130.0,4
 1,112.0,0
-r,0.0,0
+r,0.0,3
 a,0.0,0
-marinajean,400.0,3
+marinajean,400.0,4
 aaaaaaaaaaaaaaa,0.0,2
 bnm,0.0,1

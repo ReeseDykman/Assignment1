@@ -138,23 +138,22 @@ public class GameManager {
 	public ArrayList<Player> getTopPlayers() {
 		
 		// for sorting
-		int topScore = 0;
-		int secondScore = 0;
+		Player topPlayer = new Player("new");
+		Player secondPlayer = new Player ("new2");
 		
 		ArrayList<Player> topPlayers = new ArrayList<Player>();
 		
 		//goes through players ArrayList and sorts into new ArrayList based on wins
 		for(Player current : players) {
-			if(current.getWins() >= topScore) {
-				topPlayers.remove(0);
-				topPlayers.add(0, current);
-				topScore = current.getWins();
-			}else if(current.getWins() <= topScore && current.getWins() >= secondScore ) {
-				topPlayers.remove(1);
-				topPlayers.add(1, current);
-				secondScore = 0;
+			if(current.getWins() > topPlayer.getWins()) {
+				topPlayer = current;
+			}else if(current.getWins() <= topPlayer.getWins() && current.getWins() >= secondPlayer.getWins() ) {
+				secondPlayer = current;
 			}
 		}
+		
+		topPlayers.add(topPlayer);
+		topPlayers.add(secondPlayer);
 		
 		System.out.print(players.toString());
 		System.out.print(topPlayers.toString());
