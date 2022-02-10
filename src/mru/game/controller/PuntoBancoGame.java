@@ -35,6 +35,14 @@ public class PuntoBancoGame {
 		cardCounter = 0;
 	}
 	
+	public int getPlayerPoints() {
+		return playerPoints;
+	}
+	
+	public int getBankerPoints() {
+		return bankerPoints;
+	}
+	
 	public void setPlayerBet(double bet) {
 		playersBet = bet;
 		p.setBalance(p.getBalance() - bet);
@@ -58,36 +66,101 @@ public class PuntoBancoGame {
 	
 	public void betterWins(){
 		p.setBalance(p.getBalance() + (playersBet * 2));
-		playersBet = 0;
-	}
-	
-	public void betterLoses() {
-		p.setBalance(p.getBalance() + (playersBet * 2));
-		playersBet = 0;
 	}
 	
 	public void betterWinsOnTie() {
 		p.setBalance(p.getBalance() + (playersBet * 5));
-		playersBet = 0;
 	}
+	
+	public void setBankerPoints(Card card1, Card card2) {
+		
+		int card1Val = card1.getRank();
+		int card2Val = card2.getRank();
+		
+		if(card1Val == 11 || card1Val == 12 || card1Val == 13) {
+			card1Val = 0;
+		}else if(card2Val == 11 || card2Val == 12 || card2Val == 13) {
+			card2Val = 0;
+		}
+		
+		bankerPoints = (card1Val + card2Val) %10;
+		
+	}
+	
+	public void setBankerPoints(Card card1, Card card2, Card card3) {
+		
+		int card1Val = card1.getRank();
+		int card2Val = card2.getRank();
+		int card3Val = card3.getRank();
+		
+		if(card1Val == 11 || card1Val == 12 || card1Val == 13) {
+			card1Val = 0;
+		}else if(card2Val == 11 || card2Val == 12 || card2Val == 13) {
+			card2Val = 0;
+		}else if(card3Val == 11 || card3Val == 12 || card3Val == 13) {
+			card3Val = 0;
+		}
+		bankerPoints = (card1Val + card2Val + card3Val) %10;
+		
+	}
+	
+	public void setPlayerPoints(Card card1, Card card2) {
+		
+		int card1Val = card1.getRank();
+		int card2Val = card2.getRank();
+		
+		if(card1Val == 11 || card1Val == 12 || card1Val == 13) {
+			card1Val = 0;
+		}else if(card2Val == 11 || card2Val == 12 || card2Val == 13) {
+			card2Val = 0;
+		}
+		
+		playerPoints = (card1Val + card2Val) %10;
+	}
+	
+	public void setPlayerPoints(Card card1, Card card2, Card card3) {
+		
+		int card1Val = card1.getRank();
+		int card2Val = card2.getRank();
+		int card3Val = card3.getRank();
+		
+		if(card1Val == 11 || card1Val == 12 || card1Val == 13) {
+			card1Val = 0;
+		}else if(card2Val == 11 || card2Val == 12 || card2Val == 13) {
+			card2Val = 0;
+		}else if(card3Val == 11 || card3Val == 12 || card3Val == 13) {
+			card3Val = 0;
+		}
+		
+		playerPoints = (card1Val + card2Val + card3Val) %10;
+	}
+	
+	
 	
 	public void bankerDraws() { 
 		bankersHand.add(deck.getDeck().get(cardCounter));
 		cardCounter ++;
-		if(bankersHand.size() == 3) {
-			bankerPoints = (bankersHand.get(0).getRank() + bankersHand.get(1).getRank() + bankersHand.get(2).getRank()  % 10);
-		}else if (bankersHand.size() == 2) {
-			bankerPoints = (bankersHand.get(0).getRank() + bankersHand.get(1).getRank()  % 10);
+		if(bankersHand.size() == 2) {
+			setBankerPoints(bankersHand.get(0),bankersHand.get(1));
+		}else if (bankersHand.size() == 3) {
+			setBankerPoints(bankersHand.get(0),bankersHand.get(1),bankersHand.get(2));
 		}
 	}
 	
 	public void playerDraws() { 
 		playersHand.add(deck.getDeck().get(cardCounter));
 		cardCounter ++;
-		if(playersHand.size() == 3) {
-			playerPoints = (playersHand.get(0).getRank() + playersHand.get(1).getRank() + playersHand.get(2).getRank()  % 10);
-		}else if (playersHand.size() == 2) {
-			playerPoints = (playersHand.get(0).getRank() + playersHand.get(1).getRank()  % 10);
+		if(playersHand.size() == 2) {
+			setPlayerPoints(playersHand.get(0),playersHand.get(1));
+		}else if (playersHand.size() == 3) {
+			setPlayerPoints(playersHand.get(0),playersHand.get(1),playersHand.get(2));
+		}
+	}
+	
+	public void checkShuffle() {
+		if(cardCounter >= 45) {
+			deck = new CardDeck();
+			cardCounter = 0;
 		}
 	}
 	
@@ -98,6 +171,7 @@ public class PuntoBancoGame {
 		playerPoints = 0;
 	
 		int thirdCard = -1;
+		
 		
 		for (int i = 0; i < 2; i++) {
 			bankerDraws();
@@ -148,10 +222,9 @@ public class PuntoBancoGame {
 			return 0;
 		}else if (playerPoints == bankerPoints && playerGuess == 2){
 			betterWinsOnTie();
-			return 0;
-		}else {
-			betterLoses();
 			return 1;
+		}else {
+			return 2;
 		}
 	}
 	

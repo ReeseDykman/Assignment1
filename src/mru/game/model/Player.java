@@ -48,4 +48,8 @@ public class Player {
 		this.wins = wins;
 	}
 	
+	public String toString() {
+		return name+","+balance+","+wins;
+	}
+	
 }

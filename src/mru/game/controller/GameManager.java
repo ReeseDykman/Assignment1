@@ -1,5 +1,6 @@
 package mru.game.controller;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class GameManager {
 	 */
 	
 	private ArrayList<Player> players;
-	private ArrayList <Player> topPlayers;//remember arraylist is a list of object
+	//remember arraylist is a list of object
 	private final String FILE_NAME = "res/CasinoInfo.txt";
 	private File info;
 	private AppMenu mainMenu;
@@ -62,7 +63,7 @@ public class GameManager {
 			Scanner reader = new Scanner(info);
 			while (reader.hasNextLine()) {
 				currentLine = reader.nextLine();
-				String[] splitLine = currentLine.split(",");
+				String[] splitLine = currentLine.trim().split(",");
 				players.add(new Player(splitLine[0],Double.parseDouble(splitLine[1]),Integer.parseInt(splitLine[2])));
 			}
 			reader.close();
@@ -78,35 +79,32 @@ public class GameManager {
 		int j = -1;
 		int i = -1;
 		
-		while(i != 1 && i != 2 && i != 3 ) {
+		while(i != 0 && i != 1 && i != 2 ) {
 			i = mainMenu.showMenu();
 		}
 		
 		switch(i) {
-
-		case 1://game
-			runGame();
-			break;
-		case 2:
-			j = mainMenu.showMenu2();
-			break;
-		default:
-			showMenus();		
+			case 0://game
+				runGame();
+				break;
+			case 1:
+				j = mainMenu.showMenu2();
+				break;
+			default:
+				save();		
 		}
 		
 		switch (j) {
-		case 1:
-		mainMenu.showTopPlayers(getTopPlayers());
-		showMenus();
-		break;
-		
-		case 2:
-		mainMenu.searchPlayer(players);
-		showMenus();
-		break;
-		
-		default:
-			showMenus();
+			case 1:
+				mainMenu.showTopPlayers(getTopPlayers());
+				showMenus();
+				break;
+			case 2:
+				mainMenu.searchPlayer(players);
+				showMenus();
+				break;
+			case 0:
+				showMenus();
 		}
 		
 	}
@@ -124,7 +122,7 @@ public class GameManager {
 		}
 		
 		if (search == null) {
-			System.out.print("New player successfully created...");
+			System.out.print("New player successfully created...\n\n");
 			search = new Player(name);
 			newPlayer = true;
 			players.add(search);
@@ -136,20 +134,16 @@ public class GameManager {
 	public ArrayList<Player> getTopPlayers() {
 		
 		int topScore = 0;
-		topPlayers = new ArrayList<Player>();
+		ArrayList<Player> topPlayers = new ArrayList<Player>();
 		
 		for(Player current : players) {
-			if(current.getWins() > topScore) {
+			if(current.getWins() >= topScore) {
 				topPlayers.add(0, current);
 				topScore = current.getWins();
 			}
 		}
 		
 		return topPlayers;
-	}
-	
-	public void addPlayer(Player p) {
-		players.add(p);
 	}
 	
 	public void runGame() {
@@ -159,18 +153,36 @@ public class GameManager {
 		
 		do {
 			
+			if(p.getBalance() <= 0) {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Sorry you are out of money and can no longer play. Press enter to return to menu...");
+				input.nextLine();
+				break;
+			}
+			game.checkShuffle();
 			game.setPlayerGuess(mainMenu.showGuess());
 			game.setPlayerBet(mainMenu.showBet(p));
-			mainMenu.showBoard(game.getPlayerBet(), game.play(), game.getPlayerHand(), game.getBankerHand());
+			int result = game.play();
+			mainMenu.showBoard(result, game.getPlayerBet(), game.getPlayerHand(), game.getPlayerPoints(), game.getBankerHand(), game.getBankerPoints());
 			
 		}while(mainMenu.askPlayAgain());
 		
-		//mainMenu.displayWelcome(p);
-		//mainMenu.displayNewWelcome(p)
-		//game.setPlayerOutcome(mainMenu.showOutcome()) showOutcome returns int;
-		//game.setPlayerBet(mainMenu.showBet());  showBet returns double
-		//do game.play while it doesnt = 1
+		showMenus();
 	}
-	//save
+	
+	public void save() {
+		
+		try {
+			FileWriter fw = new FileWriter(info);
+			for(Player p : players) {
+				fw.write(p.toString() + "\n");
+			}
+			fw.close();
+		} catch (IOException e) {
+			System.out.print("Error: could not save\n");;
+		}
+		
+		System.out.print("Save Successful");
+	}
 
 }

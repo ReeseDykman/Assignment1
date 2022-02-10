@@ -32,7 +32,7 @@ public class Card {
 	 * @return the rank
 	 */
 	public int getRank() {
-		return rank;
+		return (rank % 13);
 	}
 
 	/**
