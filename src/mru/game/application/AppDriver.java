@@ -10,6 +10,7 @@ public class AppDriver {
 
 	public static void main(String[] args) {
 			
+		//runs the application
 		GameManager gameData = new GameManager();	
 		
 	}
