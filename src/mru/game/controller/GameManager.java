@@ -87,6 +87,110 @@ public class GameManager {
 	}
 	
 	/**
+	 * getter method for a player from the players ArrayList
+	 * 
+	 * if no player is found a new one is created
+	 * 
+	 * @param name, returned from calling menu.enterName()
+	 * 
+	 * @return a Player, either new and added to the players ArrayList or fetched from the players ArrayList
+	 * 
+	 */
+	public Player getPlayer(String name, boolean makeNew) {
+		
+		Player search = null;// for storing the return
+		
+		//searches through players based on name
+		for(int i =0; i<players.size(); i++) {
+			if(name.equalsIgnoreCase(players.get(i).getName())) {
+				search = players.get(i);
+				break;
+			}
+		}
+		
+		//creates new player and adds to list if the player wasnt found and make new is true, else displays not found
+		if (search == null && makeNew == true) {
+			System.out.print("New player successfully created...\n\n");
+			search = new Player(name);
+			newPlayer = true;
+			players.add(search);
+		}else if(search == null && makeNew == false) {
+			System.out.print("Sorry, player not found...\n");
+			showMenus();
+		}
+		
+		// returns player that was being searched
+		return search;
+	}
+	
+	/**
+	 * creates a new ArrayList of Player
+	 * 
+	 * Sorts through players ArrayList and adds to the topPlayers ArrayList
+	 * 
+	 * 0 index is top score, scores decrease as index increases
+	 * 
+	 * ties are added to the list
+	 * 
+	 * @return a sorted ArrayList based on wins
+	 * 
+	 */
+	public ArrayList<Player> getTopPlayers() {
+		
+		// for sorting
+		int topScore = 0;
+		int secondScore = 0;
+		
+		ArrayList<Player> topPlayers = new ArrayList<Player>();
+		
+		//goes through players ArrayList and sorts into new ArrayList based on wins
+		for(Player current : players) {
+			if(current.getWins() >= topScore) {
+				topPlayers.remove(0);
+				topPlayers.add(0, current);
+				topScore = current.getWins();
+			}else if(current.getWins() <= topScore && current.getWins() >= secondScore ) {
+				topPlayers.remove(1);
+				topPlayers.add(1, current);
+				secondScore = 0;
+			}
+		}
+		
+		System.out.print(players.toString());
+		System.out.print(topPlayers.toString());
+		//returns a list of players based on wins
+		return topPlayers;
+	}
+	
+	
+	
+	/**
+	 * writes to the file object that was created in the constructor
+	 * 
+	 * if written successfully it will display so
+	 * 
+	 * if not written successfully it will display error
+	 * 
+	 */
+	public void save() {
+		
+		//create new FileWriter based upon File object created by constructor
+		try {
+			FileWriter fw = new FileWriter(info);
+			//loop through player list and write to the text file
+			for(Player p : players) {
+				fw.write(p.toString() + "\n");
+			}
+			fw.close();
+		//display error if saving fails
+		} catch (IOException e) {
+			System.out.print("Error: could not save\n");
+		}
+		//print success
+		System.out.print("Save Successful");
+	}
+	
+	/**
 	 * called by constructor
 	 * 
 	 * creates new menu object
@@ -120,7 +224,8 @@ public class GameManager {
 				j = mainMenu.showMenu2();
 				break;
 			default://if game or menu2 isn't selected then the only thing left to do is save
-				save();		
+				save();
+				j = -1;
 		}
 		
 		//based upon decision in menu2, will be skipped if menu2 is never shown
@@ -130,7 +235,7 @@ public class GameManager {
 				showMenus();//after showing top players, re call this method to start the menu process again
 				break;
 			case 2://search player menu called, player list passed
-				mainMenu.searchPlayer(players);
+				mainMenu.searchPlayer(getPlayer(mainMenu.enterName(), false));
 				showMenus();// after showing player, re call this method to start the menu process again
 				break;
 			case 0:
@@ -139,70 +244,6 @@ public class GameManager {
 		
 	}
 	
-	/**
-	 * getter method for a player from the players ArrayList
-	 * 
-	 * if no player is found a new one is created
-	 * 
-	 * @param name, returned from calling menu.enterName()
-	 * 
-	 * @return a Player, either new and added to the players ArrayList or fetched from the players ArrayList
-	 * 
-	 */
-	public Player getPlayer(String name) {
-		
-		Player search = null;// for storing the return
-		
-		//searches through players based on name
-		for(int i =0; i<players.size(); i++) {
-			if(name.equalsIgnoreCase(players.get(i).getName())) {
-				search = players.get(i);
-				break;
-			}
-		}
-		
-		//creates new player and adds to list if the player wasnt found
-		if (search == null) {
-			System.out.print("New player successfully created...\n\n");
-			search = new Player(name);
-			newPlayer = true;
-			players.add(search);
-		}
-		
-		// returns player that was being searched
-		return search;
-	}
-	
-	/**
-	 * creates a new ArrayList of Player
-	 * 
-	 * Sorts through players ArrayList and adds to the topPlayers ArrayList
-	 * 
-	 * 0 index is top score, scores decrease as index increases
-	 * 
-	 * ties are added to the list
-	 * 
-	 * @return a sorted ArrayList based on wins
-	 * 
-	 */
-	public ArrayList<Player> getTopPlayers() {
-		
-		// for sorting
-		int topScore = 0;
-		
-		ArrayList<Player> topPlayers = new ArrayList<Player>();
-		
-		//goes through players ArrayList and sorts into new ArrayList based on wins
-		for(Player current : players) {
-			if(current.getWins() >= topScore) {
-				topPlayers.add(0, current);
-				topScore = current.getWins();
-			}
-		}
-		
-		//returns a list of players based on wins
-		return topPlayers;
-	}
 	
 	/**
 	 * creates a new puntoBancoGame
@@ -215,7 +256,7 @@ public class GameManager {
 	public void runGame() {
 		
 		//player that will play the game, based on get player method with string input from menu
-		Player p = getPlayer(mainMenu.enterName());
+		Player p = getPlayer(mainMenu.enterName(), true);
 		//creates new game, passes player that is playing
 		game = new PuntoBancoGame(p);
 		//shows welcome menu for player
@@ -245,31 +286,4 @@ public class GameManager {
 		
 		showMenus();// returns to menus when game is over
 	}
-	
-	/**
-	 * writes to the file object that was created in the constructor
-	 * 
-	 * if written successfully it will display so
-	 * 
-	 * if not written successfully it will display error
-	 * 
-	 */
-	public void save() {
-		
-		//create new FileWriter based upon File object created by constructor
-		try {
-			FileWriter fw = new FileWriter(info);
-			//loop through player list and write to the text file
-			for(Player p : players) {
-				fw.write(p.toString() + "\n");
-			}
-			fw.close();
-		//display error if saving fails
-		} catch (IOException e) {
-			System.out.print("Error: could not save\n");
-		}
-		//print success
-		System.out.print("Save Successful");
-	}
-
 }

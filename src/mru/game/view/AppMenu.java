@@ -148,27 +148,10 @@ public class AppMenu {
 	 * 
 	 * @param players list of players from GameManager
 	 */
-	public void searchPlayer(ArrayList<Player> players) {
-		//get name from player input, call getName method
-		String name = enterName();
-		//initialize empty player
-		Player player = null;
-		
-		//search player, if found store in player variable
-		for(int i =0; i<players.size(); i++) {
-			if(name.equalsIgnoreCase(players.get(i).getName())) {
-				player = players.get(i);
-				break;
-			}
-		}
-		
-		//display if not found
-		if(player == null) {
-			Scanner input = new Scanner (System.in);
-			System.out.print("Sorry, player not found.\nPress enter to return to menu...\n\n");
-			input.nextLine();
-			return;
-		}
+	public void searchPlayer(Player p) {
+
+		//initialize player
+		Player player = p;
 		
 		//make basic rows for print
 		final String THICKROW = String.format("+" + "=".repeat(18) + "+" + "=".repeat(15) + "+" + "=".repeat(18) + "+");
