@@ -1,8 +1,0 @@
-Ali,1.0,1
-Kho,2.0,2
-Eli,3.0,3
-Reese,4.0,4
-kale,5.0,5
-ryan,6.0,6
-liam,7.0,7
-buck,8.0,8
