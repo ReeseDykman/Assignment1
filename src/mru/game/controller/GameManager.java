@@ -152,12 +152,11 @@ public class GameManager {
 			}
 		}
 		
+		//add the top two players to the list
 		topPlayers.add(topPlayer);
 		topPlayers.add(secondPlayer);
 		
-		System.out.print(players.toString());
-		System.out.print(topPlayers.toString());
-		//returns a list of players based on wins
+		//returns a list of top two players
 		return topPlayers;
 	}
 	

@@ -32,7 +32,7 @@ public class Card {
 	 * @return the rank
 	 */
 	public int getRank() {
-		return (rank % 13);
+			return rank;
 	}
 
 	/**
@@ -66,11 +66,11 @@ public class Card {
 		
 		String name = "King of ";
 		
-		if (rank >= 2 && rank <= 10)
-			name = rank + " of ";
-		else if (rank == 1)
+		if (rank >= 2 && rank  <= 10)
+			name = rank  + " of ";
+		else if (rank  == 1)
 			name = "Ace of ";
-		else if (rank == 11)
+		else if (rank  == 11)
 			name = "Jack of ";
 		else if (rank == 12)
 			name = "Queen of ";

@@ -23,6 +23,18 @@ public class CardDeck {
 		createDeck();
 		shuffleDeck();
 	}
+	
+	/**
+	 * creates a deck but doesn't shuffle it
+	 * 
+	 * for testing
+	 * 
+	 * @param rigTheDeck insert value to rig the deck
+	 */
+	public CardDeck(boolean rigTheDeck) {
+		deck = new ArrayList<Card>();
+		createDeck();
+	}
 
 	/**
 	 * This method creates the deck

@@ -1,8 +1,10 @@
 reese,0.0,3
-kale,130.0,4
+kale,123.0,5
 1,112.0,0
 r,0.0,3
 a,0.0,0
 marinajean,400.0,4
 aaaaaaaaaaaaaaa,0.0,2
 bnm,0.0,1
+buck,75.0,0
+yolo,500.0,0
