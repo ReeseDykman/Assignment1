@@ -1,1 +1,5 @@
+mru.game.application
 mru.game.controller
+mru.game.model
+mru.game.test
+mru.game.view

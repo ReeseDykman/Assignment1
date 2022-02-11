@@ -6,5 +6,7 @@ a,0.0,0
 marinajean,400.0,4
 aaaaaaaaaaaaaaa,0.0,2
 bnm,0.0,1
-buck,75.0,0
+buck,97.0,2
 yolo,500.0,0
+ryan,0.0,0
+man,166.0,3

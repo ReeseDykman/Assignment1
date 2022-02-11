@@ -7,7 +7,12 @@ import java.util.Scanner;
 import mru.game.model.Player;
 import mru.game.view.AppMenu;
 
-
+/**
+ * This class runs other classes of the program
+ * 
+ * @author Reese
+ *
+ */
 
 public class GameManager {
 	
@@ -20,12 +25,12 @@ public class GameManager {
 	 * Depending on your designing technique you may need and you can add more methods here 
 	 */
 	
-	private ArrayList<Player> players;
-	private final String FILE_NAME = "res/CasinoInfo.txt";
-	private File info;
-	private AppMenu mainMenu;
-	private PuntoBancoGame game;
-	private boolean newPlayer = false;
+	private ArrayList<Player> players; //list of players from file
+	private final String FILE_NAME = "res/CasinoInfo.txt";//standard file name and path
+	private File info; //object of file containing data
+	private AppMenu mainMenu; //menu used to prompt for input
+	private PuntoBancoGame game; //new game started every time the player wishes to do so
+	private boolean newPlayer = false; //changes if its a new player playing
 	
 	/**
 	 * Constructor for GameManager

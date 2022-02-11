@@ -2,8 +2,16 @@ package mru.game.controller;
 
 import java.util.ArrayList;
 
+
 import mru.game.model.Player;
 import mru.game.view.AppMenu;
+
+/**
+ * this class is used to get and store results and outcomes of a punto banco game
+ * 
+ * @author Reese
+ *
+ */
 
 public class PuntoBancoGame {
 	
@@ -15,8 +23,8 @@ public class PuntoBancoGame {
 	private ArrayList<Card> bankersHand;//cards drawn by banker
 	
 	private int cardCounter;//for shuffle
-	private int bankerPoints;
-	private int playerPoints;
+	private int bankerPoints;//current points of banker resets with each game
+	private int playerPoints;//current points of player resets with each game
 	
 	private int playerGuess;//what the player thinks the outcome will be
 	private double playersBet;//how much the player bet
